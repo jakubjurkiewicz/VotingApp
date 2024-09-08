@@ -1,0 +1,82 @@
+<div class="container mt-4">
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Candidates</h3>
+      <form (ngSubmit)="addCandidate()">
+        <div class="mb-3">
+          <input type="text" [(ngModel)]="newCandidate.name" name="name" class="form-control" placeholder="Candidate Name">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Candidate</button>
+      </form>
+
+      <table class="table table-bordered mt-4">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Votes</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let candidate of candidates">
+            <td>{{ candidate.id }}</td>
+            <td>{{ candidate.name }}</td>
+            <td>{{ candidate.votes }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+
+    <div class="col-md-6">
+      <h3>Voters</h3>
+      <form (ngSubmit)="addVoter()">
+        <div class="mb-3">
+          <input type="text" [(ngModel)]="newVoter.name" name="name" class="form-control" placeholder="Voter Name">
+        </div>
+        <button type="submit" class="btn btn-primary">Add Voter</button>
+      </form>
+
+      <table class="table table-bordered mt-4">
+        <thead>
+          <tr>
+            <th>ID</th>
+            <th>Name</th>
+            <th>Has Voted</th>
+          </tr>
+        </thead>
+        <tbody>
+          <tr *ngFor="let voter of voters">
+            <td>{{ voter.id }}</td>
+            <td>{{ voter.name }}</td>
+            <td>{{ voter.hasVoted ? 'Yes' : 'No' }}</td>
+          </tr>
+        </tbody>
+      </table>
+    </div>
+  </div>
+
+  <hr />
+
+  <div class="row">
+    <div class="col-md-6">
+      <h3>Cast Vote</h3>
+      <div class="mb-3">
+        <label for="voterSelect">Select Voter</label>
+        <select [(ngModel)]="selectedVoterId" name="voterSelect" class="form-control">
+          <option *ngFor="let voter of availableVoters" [value]="voter.id">{{ voter.name }}</option>
+        </select>
+      </div>
+
+      <div class="mb-3">
+        <label for="candidateSelect">Select Candidate</label>
+        <select [(ngModel)]="selectedCandidateId" name="candidateSelect" class="form-control">
+          <option *ngFor="let candidate of candidates" [value]="candidate.id">{{ candidate.name }}</option>
+        </select>
+      </div>
+
+      <button (click)="castVote()" class="btn btn-success" [disabled]="!selectedVoterId || !selectedCandidateId">
+        Vote
+      </button>
+    </div>
+  </div>
+</div>
